@@ -95,15 +95,13 @@ module.exports = {
       allChunks: true,
     }),
     new EndWebpackPlugin(async () => {
-      // 自定义域名
-      fs.writeFileSync(path.resolve(outputPath, 'CNAME'), 'resume.wuhaolin.cn');
 
       await publishGhPages();
 
       // 调用 Chrome 渲染出 PDF 文件
       const chromePath = findChrome();
       spawnSync(chromePath, ['--headless', '--disable-gpu', `--print-to-pdf=${path.resolve(outputPath, 'resume.pdf')}`,
-        'http://resume.wuhaolin.cn' // 这里注意改成你的在线简历的网站
+        'https://github.com/pointline/resume' // 这里注意改成你的在线简历的网站
       ]);
 
       // 重新发布到 ghpages
